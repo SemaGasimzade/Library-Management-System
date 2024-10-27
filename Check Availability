@@ -1,0 +1,28 @@
+-----------------------------------------------------------CHECK Availability ----------------------------------------------------------------------    
+create or replace procedure Check_Availability(
+    p_book_name in varchar2,
+    p_availability out varchar2
+) as
+begin
+    select case 
+    when Availability = 1 then 'Available' 
+    else 'Not Available' end 
+    into p_availability
+    from Books
+    where Book_name = p_book_name;
+
+    exception
+        when NO_DATA_FOUND then
+            p_availability := 'Book not found';
+end ;
+/
+
+declare
+    book_name varchar2(30) := 'To Kill a Mockingbird'; -- Replace with the actual book ID
+    availability varchar2(20);
+begin
+    Check_Availability(book_name, availability);
+    DBMS_OUTPUT.PUT_LINE('The book is: ' || availability);
+end;
+/
+

@@ -1,0 +1,83 @@
+--------------------------------------------------------REGISTER NEW READERS / UPDATE READER INFO ----------------------------------------------------------
+create or replace PACKAGE reader_management_pkg AS
+   
+    PROCEDURE register_reader(
+        
+        p_first_name  VARCHAR2,
+        p_last_name  VARCHAR2,
+        p_email  VARCHAR2,
+        p_phone_number  varchar2
+    );
+
+     PROCEDURE update_reader_info(
+        p_reader_id  number,
+        p_first_name  VARCHAR2,
+        p_last_name  VARCHAR2,
+        p_email  VARCHAR2,
+        p_phone_number  varchar2
+    );
+
+
+
+END ;
+
+
+
+CREATE OR REPLACE PACKAGE BODY reader_management_pkg AS
+
+    PROCEDURE register_reader(
+       
+        p_first_name  VARCHAR2,
+        p_last_name  VARCHAR2,
+        p_email  VARCHAR2,
+        p_phone_number  varchar2
+    ) IS
+    BEGIN
+
+        INSERT INTO readers (first_name, last_name, email,phone_number)
+        VALUES (p_first_name, p_last_name, p_email, p_phone_number);
+        COMMIT;
+    END ;
+
+
+    PROCEDURE update_reader_info(
+        p_reader_id   number,
+        p_first_name   VARCHAR2,
+        p_last_name   VARCHAR2,
+        p_email  VARCHAR2,
+        p_phone_number  varchar2
+    ) IS
+    BEGIN
+
+       update readers
+set first_name = p_first_name,
+    last_name = p_last_name,
+    email = p_email,
+    phone_number = p_phone_number
+
+    where reader_id = p_reader_id;
+    commit;
+
+    END ;
+END;
+-------------------------------------------------------------------------------------------------------------------------------------------
+BEGIN
+reader_management_pkg.register_reader( 'John','Does','john.doe@example.com','18329301-12'
+  );
+
+  
+EXCEPTION
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+END;   
+-------------------------------------------------------------------------------------------
+BEGIN
+
+reader_management_pkg.update_reader_info(11,'John','Do','john.doe@example.com','18329301-12');
+
+EXCEPTION
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+END;
+
+

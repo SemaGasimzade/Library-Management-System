@@ -58,5 +58,5 @@ return_date: Date the book was returned
 To populate these tables with sample data, I wrote SQL scripts that insert multiple entries, simulating real-world scenarios. This allows for comprehensive testing of the library management processes and ensures the system functions as intended.
 
 ## Tools
--SQL-Database Management
+-ORACLE SQL-Database Management
 

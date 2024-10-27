@@ -1,0 +1,73 @@
+---------------------------------------------ISSUE BOOKS TO READERS /RETURN BOOKS-------------------------------------------------------------------------
+CREATE OR REPLACE PACKAGE MANAGEMENT_ORDERS_pkg AS
+    
+    PROCEDURE issue_book(
+        
+        P_reader_id  number,
+        P_book_id  NUMBER,
+        P_order_date  DATE,
+        P_return_date  DATE
+    );
+
+    
+    PROCEDURE return_book(
+        P_order_id  NUMBER,
+        P_reader_id  NUMBER,
+        P_book_id  NUMBER,
+        P_order_date  DATE,
+        P_return_date  DATE
+    );
+END management_orders_pkg;
+/
+
+CREATE OR REPLACE PACKAGE BODY management_orders_pkg AS
+    
+     PROCEDURE issue_book(
+       
+        p_reader_id  number,
+        p_book_id  NUMBER,
+        p_order_date  DATE,
+        p_return_date  DATE
+    ) AS
+    BEGIN
+       
+        INSERT INTO orders (reader_id, book_id, order_date, return_date)
+        VALUES (p_reader_id, p_book_id, p_order_date, p_return_date);
+        
+        
+        COMMIT;
+    END issue_book;
+
+    
+     PROCEDURE return_book(
+        p_order_id  NUMBER,
+        p_reader_id  NUMBER,
+        p_book_id  NUMBER,
+        p_order_date  DATE,
+        p_return_date  DATE
+    ) AS
+    BEGIN
+       
+        UPDATE orders
+        SET return_date = p_return_date
+        WHERE reader_id = p_reader_id
+        AND book_id = p_book_id
+        AND return_date IS NULL;
+        
+        
+        COMMIT;
+    END return_book;
+END management_orders_pkg;
+/
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+BEGIN
+    management_orders_pkg.issue_book( 9,1, SYSDATE, '');
+END;
+
+------------------------------------------------------------------------------
+BEGIN
+    management_orders_pkg.return_book(11, 9,1,'21.09.2023', SYSDATE + 14);
+END;
+
+

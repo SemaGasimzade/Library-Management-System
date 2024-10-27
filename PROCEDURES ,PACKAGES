@@ -1,0 +1,91 @@
+--------------------------------------------------ADD/EDIT/DELETE BOOKS-----------------------------------------------------------------------------
+CREATE OR REPLACE PACKAGE add_edit_delete_pkg AS
+   
+    PROCEDURE add_book(
+
+        p_book_name VARCHAR2,
+        p_book_author VARCHAR2,
+        p_book_genre VARCHAR2,
+        p_availability NUMBER
+    );
+
+    PROCEDURE edit_book(
+        p_book_id NUMBER,
+        p_book_name VARCHAR2,
+        p_book_author VARCHAR2,
+        p_book_genre VARCHAR2,
+        p_availability NUMBER
+    );
+
+   
+    PROCEDURE delete_book(p_book_id NUMBER);
+    
+  
+
+END ;
+
+
+
+CREATE OR REPLACE PACKAGE BODY add_edit_delete_pkg AS
+
+    PROCEDURE add_book(
+      
+        p_book_name VARCHAR2,
+        p_book_author VARCHAR2,
+        p_book_genre VARCHAR2,
+        p_availability NUMBER
+    ) IS
+    BEGIN
+       
+        INSERT INTO books (book_name, book_author, book_genre,availability)
+        VALUES (p_book_name, p_book_author, p_book_genre, p_availability);
+        COMMIT;
+    END ;
+
+    
+    PROCEDURE edit_book(
+        p_book_id NUMBER,
+        p_book_name VARCHAR2,
+        p_book_author VARCHAR2,
+        p_book_genre VARCHAR2,
+        p_availability NUMBER
+    ) IS
+    BEGIN
+       
+       update books
+set book_name=p_book_name,
+    book_author=p_book_author,
+    book_genre=p_book_genre,
+    availability=p_availability
+    
+    where book_id=p_book_id;
+    commit;
+
+    END ;
+
+   
+    PROCEDURE delete_book(p_book_id NUMBER) IS
+    BEGIN
+       
+        DELETE FROM books WHERE book_id = p_book_id;
+        COMMIT;
+    END ;
+    
+   
+END;
+/
+
+
+------------------------------------------------------- ADDING BOOKS------------------------------------------------------------------------
+BEGIN
+    add_edit_delete_pkg.add_book('Elekecmez Yaquar', 'Elxan Elatli ', 'Dedektiv', 1);
+END;
+-------------------------------------------------------EDITING BOOKS-------------------------------------------------------------------------
+BEGIN
+    add_edit_delete_pkg.edit_book(11,'Elekecmez Yaquar', 'Elxan Elatli ', 'Dedektiv', 0);
+END;
+
+-------------------------------------------------------DELETING BOOKS-----------------------------------------------------------------------------
+BEGIN
+    add_edit_delete_pkg.delete_book(11);
+END;

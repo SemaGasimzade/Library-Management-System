@@ -60,3 +60,16 @@ To populate these tables with sample data, I wrote SQL scripts that insert multi
 ## Tools
 -ORACLE SQL-Database Management
 
+## Packages and Procedures
+In this project, I developed several packages and procedures to enhance the functionality of the Library Management System.
+
+#### Book Management
+I implemented procedures for issuing books to readers and processing returns. These procedures ensure that the system accurately tracks book availability and updates transaction records accordingly.
+
+#### Availability Check
+A dedicated procedure was created to check the availability status of books, allowing both library staff and readers to easily ascertain if a book can be borrowed.
+
+#### Reader Management
+I also designed packages to handle reader registration and updates. This includes procedures for adding new readers to the system and updating existing reader information, ensuring that the library maintains accurate and up-to-date records.
+
+These packages and procedures streamline operations, improve user experience, and maintain data integrity within the system.
